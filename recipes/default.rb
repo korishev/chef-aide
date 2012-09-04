@@ -55,5 +55,5 @@ end
 execute "/usr/sbin/aideinit" do
 	user "root"
 	group "root"
-	not_if { ::File.exists?("/var/lib/aide/aide.db") }
+	creates "/var/lib/aide/aide.db"
 end
