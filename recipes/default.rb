@@ -50,10 +50,18 @@ template "/etc/aide/aide.conf.d/99_aide_custom" do
   variables(
     :custom_rules       => node['aide']['custom_rules'],
   )
+  notifies :run, "execute[update-aide-config]", :immediately
 end
 
 execute "/usr/sbin/aideinit" do
 	user "root"
 	group "root"
 	creates "/var/lib/aide/aide.db"
+end
+
+execute "update-aide-config" do
+  command "/usr/sbin/update-aide.conf"
+  user "root"
+  group "root"
+  action :nothing
 end
